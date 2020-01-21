@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../Templates/plantilla_menu.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="titulo">
+        <h:outputText value="Registro"/>
+    </ui:define>
+    
+    <ui:define name="content">
+       <h:form>
+            <h3 style="margin-top:0">Seleccionar Periodo de Tiempo</h3>
+            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                <p:outputLabel for="año" value="Año:" />
+                <p:selectOneMenu id="año" value="#{mes.año}"  >
+                    <f:selectItem itemLabel="2015" itemValue="2015" />
+                    <f:selectItem itemLabel="2016" itemValue="2016" />
+                    <p:ajax update="año" process="año" />
+                </p:selectOneMenu>
+                <p:outputLabel for="trim" value="Trimestre:" />
+                <p:selectOneMenu id="trim" value="#{mes.trimestre}" style="width:125px">
+                    <f:selectItem itemLabel="1" itemValue="1" />
+                    <f:selectItem itemLabel="2" itemValue="2" />
+                    <f:selectItem itemLabel="3" itemValue="3" />
+                    <f:selectItem itemLabel="4" itemValue="4" />
+                    <p:ajax update="trim" process="trim" />
+                </p:selectOneMenu>
+                <p:outputLabel for="mes" value="Mes:" />
+                <p:selectOneMenu id="mes" value="#{mes.mes}" style="width:125px">
+                    <f:selectItem itemValue=".. Seleccione" itemLabel=".. Seleccione"/>
+                    <f:selectItems value="#{mes.list_mes}" var="c" itemLabel="#{c.decrip}" itemValue="#{c.id}"/>
+                    <p:ajax update="mes" process="mes" />
+                </p:selectOneMenu>   
+               
+            </h:panelGrid>
+            <h3 style="margin-top:0">Seleccionar Ubicacion</h3>
+            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5"  >
+
+                <p:outputLabel for="prov" value="Provincia:" />
+                <p:selectOneMenu id="prov" value="#{ubicacion.nom_provincia}" style="width:125px"  >
+                    <f:selectItem itemValue=".. Seleccione" itemLabel=".. Seleccione"/>
+                    <f:selectItems value="#{ubicacion.list_provincia}"/>
+                    <p:ajax update="canton" listener="#{ubicacion.inicializador_canton()}" process="prov" />      
+                </p:selectOneMenu>
+
+                <p:outputLabel for="canton" value="Canton:" />
+                <p:selectOneMenu id="canton" value="#{ubicacion.nom_canton}" style="width:125px"  >
+                    <f:selectItem itemValue=".. Seleccione" itemLabel=".. Seleccione" />
+                    <f:selectItems value="#{ubicacion.list_canton}"  />
+                    <p:ajax update="parro" listener="#{ubicacion.inicializador_parroquia()}" process="canton" />
+                </p:selectOneMenu>
+
+
+                <p:outputLabel for="parro" value="Parroquia:" />
+                <p:selectOneMenu id="parro" value="#{ubicacion.nom_parroquia}" style="width:125px"  >
+                    <f:selectItem itemValue=".. Seleccione" itemLabel=".. Seleccione" />
+                    <f:selectItems value="#{ubicacion.list_parroquia}"/>  
+                    <p:ajax update="parro" process="parro"/>
+                </p:selectOneMenu>
+
+            </h:panelGrid>
+
+            <h3 style="margin-top:0">Seleccionar Estado Civil</h3>
+            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                <p:outputLabel for="estado" value="Estado Civil:" />
+                <p:selectOneMenu id="estado" value="#{civil.descripcion}" style="width:125px">
+                    <f:selectItem itemValue=".. Seleccione" itemLabel=".. Seleccione" />
+                    <f:selectItems value="#{civil.list_descripcion}"/>
+                    <p:ajax update="estado" process="estado" />
+                </p:selectOneMenu>
+            </h:panelGrid>
+
+            <h3 style="margin-top:0">Seleccionar Asistencia</h3>
+            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                <p:outputLabel for="asist" value="Asistencia por:" />
+                <p:selectOneMenu id="asist" value="#{asis.descrip}" style="width:125px">
+                    <f:selectItem itemValue=".. Seleccione" itemLabel=".. Seleccione" />
+                    <f:selectItems value="#{asis.list_asis}" />
+                    <p:ajax update="asist" process="asist" />
+                </p:selectOneMenu>
+            </h:panelGrid>
+
+            <h:commandButton action="#{cv.dibujar(mes.año,mes.trimestre,mes.mes,ubicacion.nom_provincia,ubicacion.nom_canton,ubicacion.nom_parroquia,civil.descripcion,asis.descrip)}" value="Consultar" class="boton">
+                <p:ajax update="panel tab"/>
+            </h:commandButton>
+            <br>
+
+                <style type="text/css">
+                    .left {
+                        margin-left: 30%;
+                    }
+
+
+                </style>
+
+                <h:panelGrid columns="1" columnClasses="leftt" style="width:100%" id="panel">
+                    <p:chart type="bar" model="#{cv.animatedModel2}" style="width:400px;" />
+                </h:panelGrid>
+            </br>
+        </h:form> 
+        <p:dataTable var="car" value="#{cv.obj}" id="tab" >
+            <p:column headerText="Descripcion">
+                <h:outputText value="#{car.descripcion}" id="desc"/>
+            </p:column>
+
+            <p:column headerText="Nombre">
+                <h:outputText value="#{car.cantidad}" />
+            </p:column>
+        </p:dataTable>
+    </ui:define>
+
+</ui:composition>

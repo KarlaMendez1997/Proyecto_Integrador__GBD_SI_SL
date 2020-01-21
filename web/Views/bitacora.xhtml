@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+
+    <body>
+
+        <ui:composition template="./../Templates/plantilla_menu_administador.xhtml">
+
+            <ui:define name="titulo">
+                <h:outputText value="Registro"/>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <h:commandButton action="#{US.consultaUsuario()}" value="Consultar" class="boton">
+                        <p:ajax update="tab" />
+                    </h:commandButton>
+                </h:form>
+                <p:dataTable var="car" value="#{US.list_usuario}" id="tab" >
+                    <p:column headerText="Cedula">
+                        <h:outputText value="#{car.cedula}" id="ced"/>
+                    </p:column>
+
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{car.nombre}" />
+                    </p:column>
+
+                    <p:column headerText="Apellido">
+                        <h:outputText value="#{car.apellido}" />
+                    </p:column>
+
+                    <p:column headerText="Correo">
+                        <h:outputText value="#{car.correo}" />
+                    </p:column>
+
+
+                    <p:column headerText="Contraseña">
+                        <h:outputText value="#{car.contraseña}" />
+                    </p:column>
+
+
+                    <p:column headerText="Rol">
+                        <h:outputText value="#{car.rol}" />
+                    </p:column>
+
+                    <p:column headerText="Eliminar">
+                        <h:form>
+                        <h:commandButton value="Eliminar" id ="bnteli">
+                            <p:ajax update="tab"  listener="#{US.eliminarUsuario(car.cedula)}" event="click"/>    
+                        </h:commandButton>
+                        </h:form>
+                    </p:column>
+
+                </p:dataTable>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

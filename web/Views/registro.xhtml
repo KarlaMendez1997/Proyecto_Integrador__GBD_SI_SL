@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../Templates/plantilla.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="titulo">
+        <h:outputText value="Registro"/> 
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="testbox1">
+            <center>
+            <h1>Registrarse</h1>
+            <form action="../registro" method="GET">
+                <br>
+                <label id="icon" for="cedula"><i class="icon-lock "></i></label>
+                <input type="text" name="cedula" id="cedula" placeholder="Cedula" />
+                </br>
+                <br>
+                <label id="icon" for="nombre"><i class="icon-user "></i></label>
+                <input type="text" name="nombre" id="nombre" placeholder="Nombre" />
+                </br>
+                <br>
+                <label id="icon" for="apellido"><i class="icon-user "></i></label>
+                <input type="text" name="apellido" id="apellido" placeholder="Apellido" />
+                </br>
+                <br>
+                <label id="icon" for="correo"><i class="icon-envelope "></i></label>
+                <input type="text" name="correo" id="name" placeholder="Email" />
+                </br>
+                <br>
+                <label id="icon" for="passwd"><i class="icon-shield "></i></label>
+                <input type="password" name="passwd" id="name" placeholder="Password" />
+                </br>
+                <br>
+                <input type="submit" value="Registro" class="boton"/>
+                </br>
+            </form> 
+            </center>
+        </div>
+    </ui:define>
+
+</ui:composition>
